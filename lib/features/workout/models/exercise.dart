@@ -10,8 +10,6 @@ abstract class Exercise with _$Exercise {
   const factory Exercise({
     required String id,
     required String name,
-    String? description,
-    String? targetMuscle,
     @Default(false) bool isUnilateral,
     @Default(TrackingType.weightAndReps) TrackingType trackingType,
   }) = _Exercise;

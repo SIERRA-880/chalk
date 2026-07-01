@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Exercise {
 
- String get id; String get name; String? get description; String? get targetMuscle; bool get isUnilateral; TrackingType get trackingType;
+ String get id; String get name; bool get isUnilateral; TrackingType get trackingType;
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ExerciseCopyWith<Exercise> get copyWith => _$ExerciseCopyWithImpl<Exercise>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.targetMuscle, targetMuscle) || other.targetMuscle == targetMuscle)&&(identical(other.isUnilateral, isUnilateral) || other.isUnilateral == isUnilateral)&&(identical(other.trackingType, trackingType) || other.trackingType == trackingType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isUnilateral, isUnilateral) || other.isUnilateral == isUnilateral)&&(identical(other.trackingType, trackingType) || other.trackingType == trackingType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,targetMuscle,isUnilateral,trackingType);
+int get hashCode => Object.hash(runtimeType,id,name,isUnilateral,trackingType);
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, description: $description, targetMuscle: $targetMuscle, isUnilateral: $isUnilateral, trackingType: $trackingType)';
+  return 'Exercise(id: $id, name: $name, isUnilateral: $isUnilateral, trackingType: $trackingType)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ExerciseCopyWith<$Res>  {
   factory $ExerciseCopyWith(Exercise value, $Res Function(Exercise) _then) = _$ExerciseCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? description, String? targetMuscle, bool isUnilateral, TrackingType trackingType
+ String id, String name, bool isUnilateral, TrackingType trackingType
 });
 
 
@@ -65,13 +65,11 @@ class _$ExerciseCopyWithImpl<$Res>
 
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? targetMuscle = freezed,Object? isUnilateral = null,Object? trackingType = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? isUnilateral = null,Object? trackingType = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,targetMuscle: freezed == targetMuscle ? _self.targetMuscle : targetMuscle // ignore: cast_nullable_to_non_nullable
-as String?,isUnilateral: null == isUnilateral ? _self.isUnilateral : isUnilateral // ignore: cast_nullable_to_non_nullable
+as String,isUnilateral: null == isUnilateral ? _self.isUnilateral : isUnilateral // ignore: cast_nullable_to_non_nullable
 as bool,trackingType: null == trackingType ? _self.trackingType : trackingType // ignore: cast_nullable_to_non_nullable
 as TrackingType,
   ));
@@ -158,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String? targetMuscle,  bool isUnilateral,  TrackingType trackingType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  bool isUnilateral,  TrackingType trackingType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Exercise() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.isUnilateral,_that.trackingType);case _:
+return $default(_that.id,_that.name,_that.isUnilateral,_that.trackingType);case _:
   return orElse();
 
 }
@@ -179,10 +177,10 @@ return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String? targetMuscle,  bool isUnilateral,  TrackingType trackingType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  bool isUnilateral,  TrackingType trackingType)  $default,) {final _that = this;
 switch (_that) {
 case _Exercise():
-return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.isUnilateral,_that.trackingType);case _:
+return $default(_that.id,_that.name,_that.isUnilateral,_that.trackingType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +197,10 @@ return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? description,  String? targetMuscle,  bool isUnilateral,  TrackingType trackingType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  bool isUnilateral,  TrackingType trackingType)?  $default,) {final _that = this;
 switch (_that) {
 case _Exercise() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.isUnilateral,_that.trackingType);case _:
+return $default(_that.id,_that.name,_that.isUnilateral,_that.trackingType);case _:
   return null;
 
 }
@@ -214,13 +212,11 @@ return $default(_that.id,_that.name,_that.description,_that.targetMuscle,_that.i
 @JsonSerializable()
 
 class _Exercise implements Exercise {
-  const _Exercise({required this.id, required this.name, this.description, this.targetMuscle, this.isUnilateral = false, this.trackingType = TrackingType.weightAndReps});
+  const _Exercise({required this.id, required this.name, this.isUnilateral = false, this.trackingType = TrackingType.weightAndReps});
   factory _Exercise.fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
 
 @override final  String id;
 @override final  String name;
-@override final  String? description;
-@override final  String? targetMuscle;
 @override@JsonKey() final  bool isUnilateral;
 @override@JsonKey() final  TrackingType trackingType;
 
@@ -237,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.targetMuscle, targetMuscle) || other.targetMuscle == targetMuscle)&&(identical(other.isUnilateral, isUnilateral) || other.isUnilateral == isUnilateral)&&(identical(other.trackingType, trackingType) || other.trackingType == trackingType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isUnilateral, isUnilateral) || other.isUnilateral == isUnilateral)&&(identical(other.trackingType, trackingType) || other.trackingType == trackingType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,targetMuscle,isUnilateral,trackingType);
+int get hashCode => Object.hash(runtimeType,id,name,isUnilateral,trackingType);
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, description: $description, targetMuscle: $targetMuscle, isUnilateral: $isUnilateral, trackingType: $trackingType)';
+  return 'Exercise(id: $id, name: $name, isUnilateral: $isUnilateral, trackingType: $trackingType)';
 }
 
 
@@ -257,7 +253,7 @@ abstract mixin class _$ExerciseCopyWith<$Res> implements $ExerciseCopyWith<$Res>
   factory _$ExerciseCopyWith(_Exercise value, $Res Function(_Exercise) _then) = __$ExerciseCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? description, String? targetMuscle, bool isUnilateral, TrackingType trackingType
+ String id, String name, bool isUnilateral, TrackingType trackingType
 });
 
 
@@ -274,13 +270,11 @@ class __$ExerciseCopyWithImpl<$Res>
 
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? targetMuscle = freezed,Object? isUnilateral = null,Object? trackingType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? isUnilateral = null,Object? trackingType = null,}) {
   return _then(_Exercise(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,targetMuscle: freezed == targetMuscle ? _self.targetMuscle : targetMuscle // ignore: cast_nullable_to_non_nullable
-as String?,isUnilateral: null == isUnilateral ? _self.isUnilateral : isUnilateral // ignore: cast_nullable_to_non_nullable
+as String,isUnilateral: null == isUnilateral ? _self.isUnilateral : isUnilateral // ignore: cast_nullable_to_non_nullable
 as bool,trackingType: null == trackingType ? _self.trackingType : trackingType // ignore: cast_nullable_to_non_nullable
 as TrackingType,
   ));

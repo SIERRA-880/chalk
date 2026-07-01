@@ -37,8 +37,6 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
     await Db.instance.upsertExercise(Exercise(
       id: widget.exercise?.id ?? const Uuid().v4(),
       name: _name.text.trim(),
-      description: widget.exercise?.description,
-      targetMuscle: widget.exercise?.targetMuscle,
       isUnilateral: _isUnilateral,
       trackingType: _trackingType,
     ));

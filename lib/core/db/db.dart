@@ -21,15 +21,17 @@ class Db {
     final dir = await getDatabasesPath();
     return openDatabase(
       p.join(dir, 'gym_companion.db'),
-      version: 3,
+      version: 4,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON;');
       },
       onUpgrade: (db, oldVersion, _) async {
         if (oldVersion < 3) {
-          // Colonnes absentes si onCreate n'était pas à jour (versions 1 ou 2)
           try { await db.execute('ALTER TABLE user_config ADD COLUMN body_weight_kg REAL'); } catch (_) {}
           try { await db.execute('ALTER TABLE user_config ADD COLUMN age INTEGER'); } catch (_) {}
+        }
+        if (oldVersion < 4) {
+          await _seedExercises(db);
         }
       },
       onCreate: (db, _) async {
@@ -102,8 +104,42 @@ class Db {
         ''');
         await db.execute(
             'CREATE INDEX idx_routine_exercises_routine ON routine_exercises(routine_id)');
+        await _seedExercises(db);
       },
     );
+  }
+
+  static const _seedData = [
+    // Powerlifting — mouvements de base
+    ['seed_squat',        'Squat',                  0, 'weightAndReps'],
+    ['seed_deadlift',     'Deadlift',               0, 'weightAndReps'],
+    ['seed_bench_press',  'Bench Press',            0, 'weightAndReps'],
+    ['seed_ohp',          'Overhead Press',         0, 'weightAndReps'],
+    ['seed_front_squat',  'Front Squat',            0, 'weightAndReps'],
+    ['seed_sumo_dl',      'Sumo Deadlift',          0, 'weightAndReps'],
+    ['seed_rdl',          'Romanian Deadlift',      0, 'weightAndReps'],
+    ['seed_barbell_row',  'Barbell Row',            0, 'weightAndReps'],
+    ['seed_cgbp',         'Close-Grip Bench Press', 0, 'weightAndReps'],
+    ['seed_paused_bench', 'Paused Bench Press',     0, 'weightAndReps'],
+    // Landmine
+    ['seed_lm_press_bi',  'Landmine Press',         0, 'weightAndReps'],
+    ['seed_lm_press_uni', 'Landmine Press (uni)',   1, 'weightAndReps'],
+    ['seed_lm_row',       'Landmine Row',           1, 'weightAndReps'],
+    ['seed_lm_squat',     'Landmine Squat',         0, 'weightAndReps'],
+    ['seed_lm_rdl',       'Landmine RDL',           0, 'weightAndReps'],
+    ['seed_lm_rotation',  'Landmine Rotation',      1, 'weightAndReps'],
+    ['seed_lm_split_sq',  'Landmine Split Squat',   1, 'weightAndReps'],
+  ];
+
+  static Future<void> _seedExercises(DatabaseExecutor db) async {
+    final batch = db.batch();
+    for (final e in _seedData) {
+      batch.execute(
+        'INSERT OR IGNORE INTO exercises (id, name, is_unilateral, tracking_type) VALUES (?, ?, ?, ?)',
+        e,
+      );
+    }
+    await batch.commit(noResult: true);
   }
 
   // ---------- Exercises ----------
@@ -115,8 +151,6 @@ class Db {
       {
         'id': e.id,
         'name': e.name,
-        'description': e.description,
-        'target_muscle': e.targetMuscle,
         'is_unilateral': e.isUnilateral ? 1 : 0,
         'tracking_type': e.trackingType.name,
       },
@@ -138,8 +172,6 @@ class Db {
   Exercise _rowToExercise(Map<String, Object?> r) => Exercise(
         id: r['id'] as String,
         name: r['name'] as String,
-        description: r['description'] as String?,
-        targetMuscle: r['target_muscle'] as String?,
         isUnilateral: (r['is_unilateral'] as int) == 1,
         trackingType: TrackingType.values
             .firstWhere((t) => t.name == r['tracking_type'] as String),
