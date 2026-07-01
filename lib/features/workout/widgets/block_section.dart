@@ -132,15 +132,24 @@ class _ExerciseGroup extends ConsumerWidget {
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            child: Text(exoName,
+                style: Theme.of(context).textTheme.titleSmall),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: [
                 Expanded(
-                    child: Text(exoName,
-                        style:
-                            Theme.of(context).textTheme.titleSmall)),
-                Text(_fmt(timer)),
-                const SizedBox(width: 8),
+                  child: Text(
+                    _fmt(timer),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 IconButton(
+                  iconSize: 32,
                   icon: Icon(allDone ? Icons.check_circle : Icons.play_arrow),
                   onPressed: allDone
                       ? null
@@ -150,6 +159,7 @@ class _ExerciseGroup extends ConsumerWidget {
                           .start(),
                 ),
                 IconButton(
+                  iconSize: 32,
                   icon: const Icon(Icons.stop),
                   onPressed: () => ref
                       .read(exerciseActiveTimerProvider(exerciseId).notifier)
