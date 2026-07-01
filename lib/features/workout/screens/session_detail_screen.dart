@@ -146,6 +146,9 @@ class _ExerciseCard extends StatelessWidget {
     if (type == TrackingType.timeBased) {
       return s.durationSeconds != null ? '${s.durationSeconds} s' : '—';
     }
+    if (type == TrackingType.calories) {
+      return s.reps != null ? '${s.reps} kcal' : '—';
+    }
     final w = s.weight != null ? '${s.weight} kg' : null;
     final r = s.reps != null ? '${s.reps} reps' : null;
     return [w, r].whereType<String>().join(' × ');

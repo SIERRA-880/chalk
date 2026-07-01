@@ -1,3 +1,3 @@
-enum TrackingType { weightAndReps, bodyweight, timeBased }
+enum TrackingType { weightAndReps, bodyweight, timeBased, calories }
 
 enum BlockType { warmup, main, finisher }

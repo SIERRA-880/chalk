@@ -32,6 +32,7 @@ class SetRow extends ConsumerWidget {
     final builder = ref.read(workoutBuilderProvider(routine).notifier);
     final showWeight = trackingType == TrackingType.weightAndReps;
     final isTimeBased = trackingType == TrackingType.timeBased;
+    final isCalories = trackingType == TrackingType.calories;
 
     final suggestion = showWeight
         ? ref.watch(suggestedWeightProvider(set.exerciseId, set.reps ?? 8))
@@ -100,7 +101,11 @@ class SetRow extends ConsumerWidget {
                   : (set.reps?.toString() ?? ''),
               enabled: !set.completed,
               decoration: InputDecoration(
-                labelText: isTimeBased ? 'Durée (s)' : 'Reps',
+                labelText: isTimeBased
+                    ? 'Durée (s)'
+                    : isCalories
+                        ? 'Calories'
+                        : 'Reps',
                 isDense: true,
               ),
               keyboardType: TextInputType.number,

@@ -105,8 +105,9 @@ String _trackingLabel(Exercise e) => switch (e.trackingType) {
 String _typeLabel(Exercise e) => switch (e.trackingType) {
       final t => switch (t.name) {
           'weightAndReps' => 'Poids + Reps',
-          'bodyweight' => 'Poids du corps',
+          'bodyweight' => 'PDC + Reps',
           'timeBased' => 'Durée',
+          'calories' => 'Calories',
           _ => t.name,
         }
     };

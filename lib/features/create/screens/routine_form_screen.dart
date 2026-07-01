@@ -144,7 +144,11 @@ class _RoutineFormScreenState extends ConsumerState<RoutineFormScreen> {
         data: (xs) {
           final ex = xs.firstWhere((e) => e.id == id,
               orElse: () => const Exercise(id: '', name: '?'));
-          return ex.trackingType == TrackingType.timeBased ? 's' : 'reps';
+          return switch (ex.trackingType) {
+            TrackingType.timeBased => 's',
+            TrackingType.calories => 'kcal',
+            _ => 'reps',
+          };
         },
         orElse: () => 'reps',
       );
@@ -171,6 +175,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
   int _reps = 8;
 
   bool get _isTimeBased => _exercise.trackingType == TrackingType.timeBased;
+  bool get _isCalories => _exercise.trackingType == TrackingType.calories;
 
   @override
   Widget build(BuildContext context) => AlertDialog(
@@ -187,7 +192,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
                   .toList(),
               onChanged: (v) => setState(() {
                 _exercise = v!;
-                _reps = _isTimeBased ? 30 : 8;
+                _reps = _isTimeBased ? 30 : (_isCalories ? 0 : 8);
               }),
             ),
             const SizedBox(height: 12),
@@ -206,7 +211,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
                   key: ValueKey(_exercise.id),
                   initialValue: '$_reps',
                   decoration: InputDecoration(
-                      labelText: _isTimeBased ? 'Durée (s)' : 'Reps'),
+                      labelText: _isTimeBased ? 'Durée (s)' : (_isCalories ? 'Calories' : 'Reps')),
                   keyboardType: TextInputType.number,
                   onChanged: (v) => _reps = int.tryParse(v) ?? _reps,
                 ),

@@ -20,10 +20,6 @@ class ExerciseFormScreen extends ConsumerStatefulWidget {
 class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
   final _formKey = GlobalKey<FormState>();
   late final _name = TextEditingController(text: widget.exercise?.name ?? '');
-  late final _description =
-      TextEditingController(text: widget.exercise?.description ?? '');
-  late final _muscle =
-      TextEditingController(text: widget.exercise?.targetMuscle ?? '');
   late bool _isUnilateral = widget.exercise?.isUnilateral ?? false;
   late TrackingType _trackingType =
       widget.exercise?.trackingType ?? TrackingType.weightAndReps;
@@ -32,8 +28,6 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
   @override
   void dispose() {
     _name.dispose();
-    _description.dispose();
-    _muscle.dispose();
     super.dispose();
   }
 
@@ -43,9 +37,8 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
     await Db.instance.upsertExercise(Exercise(
       id: widget.exercise?.id ?? const Uuid().v4(),
       name: _name.text.trim(),
-      description:
-          _description.text.trim().isEmpty ? null : _description.text.trim(),
-      targetMuscle: _muscle.text.trim().isEmpty ? null : _muscle.text.trim(),
+      description: widget.exercise?.description,
+      targetMuscle: widget.exercise?.targetMuscle,
       isUnilateral: _isUnilateral,
       trackingType: _trackingType,
     ));
@@ -70,18 +63,6 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
                 decoration: const InputDecoration(labelText: 'Nom'),
                 validator: (v) =>
                     (v == null || v.trim().isEmpty) ? 'Requis' : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _description,
-                decoration: const InputDecoration(labelText: 'Description'),
-                minLines: 1,
-                maxLines: 3,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _muscle,
-                decoration: const InputDecoration(labelText: 'Muscle ciblé'),
               ),
               const SizedBox(height: 12),
               CheckboxListTile(
@@ -122,6 +103,7 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
 
 String _trackingLabel(TrackingType t) => switch (t) {
       TrackingType.weightAndReps => 'Poids + Reps',
-      TrackingType.bodyweight => 'Poids du corps',
+      TrackingType.bodyweight => 'PDC + Reps',
       TrackingType.timeBased => 'Durée',
+      TrackingType.calories => 'Calories',
     };
