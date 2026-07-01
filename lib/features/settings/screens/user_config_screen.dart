@@ -40,13 +40,23 @@ class _UserConfigScreenState extends State<UserConfigScreen> {
 
   Future<void> _save() async {
     setState(() => _saving = true);
-    await Db.instance.saveUserConfig(UserConfig(
-      id: _id,
-      globalObjectives: _objectives.text.trim(),
-      bodyWeightKg: double.tryParse(_weight.text.replaceAll(',', '.')),
-      age: int.tryParse(_age.text),
-    ));
-    if (mounted) context.pop();
+    try {
+      await Db.instance.saveUserConfig(UserConfig(
+        id: _id,
+        globalObjectives: _objectives.text.trim(),
+        bodyWeightKg: double.tryParse(_weight.text.replaceAll(',', '.')),
+        age: int.tryParse(_age.text),
+      ));
+      if (mounted) context.pop();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur : $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override

@@ -13,23 +13,23 @@ class Db {
   Db._();
   static final Db instance = Db._();
 
-  Database? _db;
+  Future<Database>? _openFuture;
 
-  Future<Database> _open() async {
-    if (_db != null) return _db!;
+  Future<Database> _open() => _openFuture ??= _doOpen();
+
+  Future<Database> _doOpen() async {
     final dir = await getDatabasesPath();
-    _db = await openDatabase(
+    return openDatabase(
       p.join(dir, 'gym_companion.db'),
-      version: 2,
+      version: 3,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON;');
       },
       onUpgrade: (db, oldVersion, _) async {
-        if (oldVersion < 2) {
-          await db.execute(
-              'ALTER TABLE user_config ADD COLUMN body_weight_kg REAL');
-          await db.execute(
-              'ALTER TABLE user_config ADD COLUMN age INTEGER');
+        if (oldVersion < 3) {
+          // Colonnes absentes si onCreate n'était pas à jour (versions 1 ou 2)
+          try { await db.execute('ALTER TABLE user_config ADD COLUMN body_weight_kg REAL'); } catch (_) {}
+          try { await db.execute('ALTER TABLE user_config ADD COLUMN age INTEGER'); } catch (_) {}
         }
       },
       onCreate: (db, _) async {
@@ -78,7 +78,9 @@ class Db {
         await db.execute('''
           CREATE TABLE user_config (
             id TEXT PRIMARY KEY,
-            global_objectives TEXT
+            global_objectives TEXT,
+            body_weight_kg REAL,
+            age INTEGER
           )
         ''');
         await db.execute('''
@@ -102,7 +104,6 @@ class Db {
             'CREATE INDEX idx_routine_exercises_routine ON routine_exercises(routine_id)');
       },
     );
-    return _db!;
   }
 
   // ---------- Exercises ----------
