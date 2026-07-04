@@ -19,7 +19,7 @@ class App extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: _seed, brightness: Brightness.dark);
 
         return MaterialApp.router(
-          title: 'GymCompanion',
+          title: 'Chalk',
           themeMode: ThemeMode.system,
           theme: ThemeData(colorScheme: light, useMaterial3: true),
           darkTheme: ThemeData(colorScheme: dark, useMaterial3: true),

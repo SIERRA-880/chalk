@@ -20,7 +20,7 @@ class Db {
   Future<Database> _doOpen() async {
     final dir = await getDatabasesPath();
     return openDatabase(
-      p.join(dir, 'gym_companion.db'),
+      p.join(dir, 'chalk.db'),
       version: 4,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON;');

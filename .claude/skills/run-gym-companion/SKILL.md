@@ -1,9 +1,9 @@
 ---
 name: run-gym-companion
-description: Déployer GymCompanion sur le téléphone Android via ADB sans perdre les données SQLite. Utiliser pour tester une modification sur le device physique — flutter run efface les données, ce script non.
+description: Déployer Chalk sur le téléphone Android via ADB sans perdre les données SQLite. Utiliser pour tester une modification sur le device physique — flutter run efface les données, ce script non.
 ---
 
-GymCompanion est une app Flutter Android. Ce skill build l'APK debug et l'installe avec `adb install -r` (replace — préserve les données SQLite). Le device est un Pixel 6a connecté en USB.
+Chalk est une app Flutter Android (powerlifting tracker). Ce skill build l'APK debug et l'installe avec `adb install -r` (replace — préserve les données SQLite). Le device est un Pixel 6a connecté en USB.
 
 ## Prérequis
 

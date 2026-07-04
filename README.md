@@ -1,6 +1,6 @@
-# gym_companion
+# Chalk
 
-A new Flutter project.
+Offline-first powerlifting tracker with AI coach (Mistral).
 
 ## Getting Started
 

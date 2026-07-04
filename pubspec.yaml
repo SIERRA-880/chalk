@@ -1,5 +1,5 @@
-name: gym_companion
-description: "Offline-first musculation tracker with read-only Mistral AI coach."
+name: chalk
+description: "Offline-first powerlifting tracker with read-only Mistral AI coach."
 publish_to: 'none'
 version: 1.0.0+1
 

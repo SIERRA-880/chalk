@@ -1,4 +1,4 @@
-package local.gymcompanion.gym_companion
+package local.chalk
 
 import io.flutter.embedding.android.FlutterActivity
 
